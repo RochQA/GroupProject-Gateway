@@ -10,21 +10,20 @@ import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.repository.AccountRepository;
 
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountGatewayServiceImpl implements AccountGatewayService{
 	
 	AccountRepository repo;
 
-	public AccountServiceImpl(AccountRepository repo) {
+	public AccountGatewayServiceImpl(AccountRepository repo) {
 		this.repo = repo;
 	}
 	
 	@Override
-	public String createAccount(CreateAccount account) {
+	public Account createAccount(CreateAccount account) {
 		Account newAcc = new Account();
 		newAcc.setEmail(account.getEmail());
 		newAcc.setPassword(account.getPassword());
-		repo.save(newAcc);
-		return Constants.CREATED_ACCOUNT_MESSAGE;
+		return newAcc;
 	}
 
 	@Override
@@ -41,15 +40,13 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Account updateAccount(Account account) {
-		Long id = account.getId();
-		Account upAccount = getAccount(id);
+	public Account updateAccount(Account upAccount, Account account) {
 		if(upAccount != null) {
 			upAccount.setEmail(account.getEmail());
 			upAccount.setPassword(account.getPassword());
-			repo.save(upAccount); 
+			return upAccount;
 		}
-		return upAccount;
+		return account;
 	}
 
 	@Override
