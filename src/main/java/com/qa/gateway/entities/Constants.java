@@ -12,5 +12,7 @@ public class Constants {
 	public static final String CREATE_ACCOUNT_PATH = "createAccount";
 	public static final String GET_ACCOUNT_PATH = "getAccount";
 	public static final String GET_ALL_ACCOUNT_PATH = "getterAllAccounts";
+	public static final String NOTHING_CHANGED_MESSAGE = "Nothing was changed";
+	public static final String DELETE_ACCOUNT_PATH = "deleteAccount";
 
 }

@@ -25,7 +25,6 @@ public class AccountGatewayServiceImpl implements AccountGatewayService{
 		newAcc.setPassword(account.getPassword());
 		return newAcc;
 	}
-
 	@Override
 	public Account getAccount(Long id) {
 		List<Account> allAccounts = getAllAccounts();
@@ -33,26 +32,21 @@ public class AccountGatewayServiceImpl implements AccountGatewayService{
 		gotAccount = allAccounts.stream().filter(account -> id.equals(account.getId())).findAny().orElse(null);
 		return gotAccount;
 	}
-
 	@Override
 	public List<Account> getAllAccounts() {
 		return repo.findAll();
 	}
-
 	@Override
 	public Account updateAccount(Account upAccount, Account account) {
 		if(upAccount != null) {
-			upAccount.setEmail(account.getEmail());
-			upAccount.setPassword(account.getPassword());
-			return upAccount;
+			account.setEmail(upAccount.getEmail());
+			account.setPassword(upAccount.getPassword());
 		}
 		return account;
 	}
-
 	@Override
 	public String deleteAccount(Long id) {
 		repo.deleteById(id);
 		return null;
 	}
-
 }
