@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.discovery.EurekaClient;
+import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.Constants;
 import com.qa.gateway.entities.Plan;
 import com.qa.gateway.service.PlanGatewayServiceImpl;
@@ -40,12 +41,16 @@ public class PlanGatewayController {
 	
 	@GetMapping("/getPlan/{planId}")
 	public Plan getPlan(@PathVariable Long planId) {
-		return null;
+		HttpEntity<Long> entity = new HttpEntity<>(planId);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_PLAN_PATH, 
+				HttpMethod.GET, entity, Plan.class).getBody();
 	}
 	
 	@GetMapping("/getAllPlans")
 	public List<Plan> getAllPlans(){
-		return null;
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_PLAN_PATH, 
+				HttpMethod.GET, null, new ParameterizedTypeReference<List<Plan>>(){}).getBody();
+	
 	}
 	
 	@PutMapping("/updatePlan")

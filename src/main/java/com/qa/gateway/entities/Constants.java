@@ -16,5 +16,7 @@ public class Constants {
 	public static final String DELETE_ACCOUNT_PATH = "deleteAccount";
 	public static final String DELETE_PLAN_PATH = "deletePlan";
 	public static final String CREATE_PLAN_PATH = "createPlan";
+	public static final String GET_PLAN_PATH = "getPlan";
+	public static final String GET_ALL_PLAN_PATH = "getAllPlans";
 
 }
