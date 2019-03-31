@@ -14,5 +14,7 @@ public class Constants {
 	public static final String GET_ALL_ACCOUNT_PATH = "getterAllAccounts";
 	public static final String NOTHING_CHANGED_MESSAGE = "Nothing was changed";
 	public static final String DELETE_ACCOUNT_PATH = "deleteAccount";
+	public static final String DELETE_PLAN_PATH = "deletePlan";
+	public static final String CREATE_PLAN_PATH = "createPlan";
 
 }

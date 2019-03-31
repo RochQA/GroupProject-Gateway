@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.discovery.EurekaClient;
 import com.qa.gateway.entities.Constants;
-import com.qa.gateway.entities.CreatePlan;
 import com.qa.gateway.entities.Plan;
 import com.qa.gateway.service.PlanGatewayServiceImpl;
 @RestController
@@ -32,36 +31,27 @@ public class PlanGatewayController {
 		this.client = client;
 	}
 	@PostMapping("/createPlan")
-	public String createPlan(@RequestBody CreatePlan plan) {
-		String validResponse = checkValid(plan);
-		if(validResponse.equals(Constants.VALID_MESSAGE)) {
-			String duplicateResponse = checkDuplicates(plan);
-			if(duplicateResponse.equals(Constants.VALID_MESSAGE)) {
-				plan.setPassword(encrypt(plan.getPassword()));
-				return savePlan(srvc.createPlan(plan));				
-			}else return duplicateResponse;
-		}else return validResponse;
+	public String createPlan(@RequestBody Plan plan) {
+		String checkRes = (checkPlan(plan));
+		if (checkRes.equals("Valid")) {
+			return savePlan(plan);
+		}else return checkRes;
 	}
+	
 	@GetMapping("/getPlan/{planId}")
 	public Plan getPlan(@PathVariable Long planId) {
-		HttpEntity<Long> entity = new HttpEntity<>(planId);
-		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_PLAN_PATH, 
-				HttpMethod.GET, entity, Plan.class).getBody();
+		return null;
 	}
 	
 	@GetMapping("/getAllPlans")
 	public List<Plan> getAllPlans(){
-		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_PLAN_PATH, 
-				HttpMethod.GET, null, new ParameterizedTypeReference<List<Plan>>(){}).getBody();
+		return null;
 	}
 	
 	@PutMapping("/updatePlan")
 	public String updatePlan(@RequestBody Plan plan) {
-		Plan oldPlan = getPlan(plan.getId());
-		Plan updPlan = srvc.updatePlan(plan, oldPlan);
-		if(oldPlan!=updPlan) {
-			return savePlan(plan);
-		}else return Constants.NOTHING_CHANGED_MESSAGE;		
+		
+		return null;	
 	}
 	
 	@DeleteMapping("/deletePlan/{planId}")
@@ -70,7 +60,10 @@ public class PlanGatewayController {
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_PLAN_PATH, 
 				HttpMethod.DELETE, entity, String.class).getBody();
 	}
-		
+	private String checkPlan(Plan plan) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
 	private String savePlan(Plan plan) {
 		HttpEntity<Plan> entity = new HttpEntity<>(plan);
 		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_PLAN_PATH, 
