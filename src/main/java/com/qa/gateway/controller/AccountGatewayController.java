@@ -2,6 +2,7 @@ package com.qa.gateway.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -21,6 +22,7 @@ import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.entities.Login;
 import com.qa.gateway.entities.Trainer;
 import com.qa.gateway.entities.UpdateAccount;
+import com.qa.gateway.repository.AccountRepository;
 import com.qa.gateway.service.AccountGatewayServiceImpl;
 @RestController
 public class AccountGatewayController {
@@ -67,17 +69,22 @@ public class AccountGatewayController {
 		String checkUpdate = checkUpdateValid(account);
 		if(checkUpdate.equals("Valid")) {
 			String updTrainer = checkUpdateTrainer(account);
-			Account updAccount = account;			
-			updAccount.setPassword(encrypt(updAccount.getPassword()));
-			return saveAccount(updAccount);
+			if(updTrainer.equals(Constants.VALID_MESSAGE)) {
+				Account updAccount = account;			
+				updAccount.setPassword(encrypt(updAccount.getPassword()));
+				return saveAccount(updAccount);
+			}else return updTrainer;
 		}else return checkUpdate;		
 	}
 	
 	@DeleteMapping("/deleteAccount/{accountId}")
 	public String deleteAccount(@PathVariable Long accountId) {
-		HttpEntity<Long> entity = new HttpEntity<>(accountId);
+		HttpEntity<Long> entityT = new HttpEntity<>(getAccount(accountId).getTrainerId());
+		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_TRAINER_PATH, 
+				HttpMethod.DELETE, entityT, String.class).getBody();
+		HttpEntity<Long> entityA = new HttpEntity<>(accountId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_ACCOUNT_PATH, 
-				HttpMethod.DELETE, entity, String.class).getBody();
+				HttpMethod.DELETE, entityA, String.class).getBody();
 	}
 	@PutMapping("/login")
 	public Account login(@RequestBody Login login) {
@@ -123,10 +130,5 @@ public class AccountGatewayController {
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.ENCRYPT_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();		
 	}
-//	private String checkTrainer(String fName, String lName) {
-//		HttpEntity<String> entity = new HttpEntity<>(fName+lName);
-//		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.TRAINER, false).getHomePageUrl()+Constants.ENCRYPT_PATH, 
-//				HttpMethod.PUT, entity, String.class).getBody();
-//	}
 
 }
