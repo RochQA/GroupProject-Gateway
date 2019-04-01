@@ -45,12 +45,6 @@ public class TrainerGatewayController {
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<Trainer>>(){}).getBody();	
 	}
 	
-	@PutMapping("/updateTrainer")
-	public String updateTrainer(@RequestBody Trainer trainer) {
-		
-		return null;	
-	}
-	
 	@DeleteMapping("/deleteTrainer/{trainerId}")
 	public String deleteTrainer(@PathVariable Long trainerId) {
 		HttpEntity<Long> entity = new HttpEntity<>(trainerId);

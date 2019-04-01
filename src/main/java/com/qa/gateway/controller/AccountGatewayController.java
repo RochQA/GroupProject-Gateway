@@ -64,14 +64,12 @@ public class AccountGatewayController {
 	
 	@PutMapping("/updateAccount")
 	public String updateAccount(@RequestBody UpdateAccount account) {
-		Account oldAccount = getAccount(account.getId());
 		String checkUpdate = checkUpdateValid(account);
 		if(checkUpdate.equals("Valid")) {
-			Account updAccount = srvc.updateAccount(account, oldAccount);
-//			if(oldAccount!=updAccount) {
+			String updTrainer = checkUpdateTrainer(account);
+			Account updAccount = account;			
 			updAccount.setPassword(encrypt(updAccount.getPassword()));
-				return saveAccount(updAccount);
-//			}else return "nothing changed";
+			return saveAccount(updAccount);
 		}else return checkUpdate;		
 	}
 	
@@ -107,6 +105,11 @@ public class AccountGatewayController {
 	private String checkUpdateValid(UpdateAccount account) {
 		HttpEntity<UpdateAccount> entity = new HttpEntity<>(account);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.CHECK_UPDATE_VALID_PATH, 
+				HttpMethod.PUT, entity, String.class).getBody();
+	}
+	private String checkUpdateTrainer(UpdateAccount account) {
+		HttpEntity<UpdateAccount> entity = new HttpEntity<>(account);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.TRAINER, false).getHomePageUrl()+Constants.CHECK_UPDATE_TRAINER_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();
 	}
 	private String checkTrainer(CreateAccount account) {

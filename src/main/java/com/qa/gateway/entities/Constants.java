@@ -26,6 +26,7 @@ public class Constants {
 	public static final String DELETE_TRAINER_PATH = "deleteTrainer";
 	public static final String GET_ALL_TRAINERS_PATH = "getAllTrainers";
 	public static final String GET_TRAINER_PATH = "getTrainer";
+	public static final String CHECK_UPDATE_TRAINER_PATH = "checkUpdateTrainer";
 
 
 }
