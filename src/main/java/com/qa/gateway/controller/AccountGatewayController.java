@@ -35,14 +35,15 @@ public class AccountGatewayController {
 	}
 	@PostMapping("/createAccount")
 	public String createAccount(@RequestBody CreateAccount account) {
-		String validResponse = checkValid(account);
-		if(validResponse.equals(Constants.VALID_MESSAGE)) {
-			String duplicateResponse = checkDuplicates(account);
-			if(duplicateResponse.equals(Constants.VALID_MESSAGE)) {
-				account.setPassword(encrypt(account.getPassword()));
-				return saveAccount(srvc.createAccount(account));				
-			}else return duplicateResponse;
-		}else return validResponse;
+		String checkResponse = checkValid(account);
+		if(checkResponse.equals(Constants.VALID_MESSAGE)) {
+			String trainerResponse = checkTrainer(account);
+			if(trainerResponse.equals("Valid")) {
+				saveAccount(srvc.createAccount(account));
+				saveTrainer(srvc.createTrainer(account));
+				return "New trainer and account created";
+			}
+		}else return checkResponse;
 	}
 	@GetMapping("/getAccount/{accountId}")
 	public Account getAccount(@PathVariable Long accountId) {
@@ -85,16 +86,23 @@ public class AccountGatewayController {
 				HttpMethod.POST, entity, String.class).getBody();
 		return Constants.VALID_MESSAGE;
 	}	
+	private String saveTrainer(Trainer trainer) {
+		HttpEntity<Account> entity = new HttpEntity<>(trainer);
+		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_TRAINER_PATH, 
+				HttpMethod.POST, entity, String.class).getBody();
+		return Constants.VALID_MESSAGE;
+	}	
 	private String checkValid(CreateAccount account) {
 		HttpEntity<CreateAccount> entity = new HttpEntity<>(account);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.CHECK_VALID_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();
 	}
-	private String checkDuplicates(CreateAccount account) {
+	private String checkTrainer(CreateAccount account) {
 		HttpEntity<CreateAccount> entity = new HttpEntity<>(account);
-		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.CHECK_DUPLICATES_PATH, 
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.TRAINER, false).getHomePageUrl()+Constants.CHECK_VALID_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();
 	}
+
 	private String encrypt(String password) {
 		HttpEntity<String> entity = new HttpEntity<>(password);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.ENCRYPT_PATH, 

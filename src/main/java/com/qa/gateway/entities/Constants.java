@@ -18,5 +18,7 @@ public class Constants {
 	public static final String CREATE_PLAN_PATH = "createPlan";
 	public static final String GET_PLAN_PATH = "getPlan";
 	public static final String GET_ALL_PLAN_PATH = "getAllPlans";
+	public static final String TRAINER = "TRAINER";
+	public static final String CREATE_TRAINER_PATH = "createTrainer";
 
 }
