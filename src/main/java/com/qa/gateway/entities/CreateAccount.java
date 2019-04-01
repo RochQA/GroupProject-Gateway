@@ -17,7 +17,9 @@ public class CreateAccount {
 	
 	private String confirmPassword;
 	
-	private String trainerName;
+	private String trainerFirstName;
+	
+	private String trainerLastName;
 	
 	public Long getId() {
 		return id;
@@ -51,12 +53,20 @@ public class CreateAccount {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public String getTrainerName() {
-		return trainerName;
+	public String getTrainerFirstName() {
+		return trainerFirstName;
 	}
 
-	public void setTrainerName(String trainerName) {
-		this.trainerName = trainerName;
+	public void setTrainerFirstName(String trainerName) {
+		this.trainerFirstName = trainerName;
+	}
+
+	public String getTrainerLastName() {
+		return trainerLastName;
+	}
+
+	public void setTrainerLastName(String trainerLastName) {
+		this.trainerLastName = trainerLastName;
 	}	
 	
 	

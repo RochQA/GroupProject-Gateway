@@ -39,12 +39,14 @@ public class AccountGatewayController {
 		if(validResponse.equals(Constants.VALID_MESSAGE)) {
 			String duplicateResponse = checkDuplicates(account);
 			if(duplicateResponse.equals(Constants.VALID_MESSAGE)) {
+//				String trainerResponse = checkTrainer(account.getTrainerFirstName(), account.getTrainerLastName());
 				account.setPassword(encrypt(account.getPassword()));
 				return saveAccount(srvc.createAccount(account));				
 			}else return duplicateResponse;
 		}else return validResponse;
 	}
 	@GetMapping("/getAccount/{accountId}")
+	
 	public Account getAccount(@PathVariable Long accountId) {
 		HttpEntity<Long> entity = new HttpEntity<>(accountId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ACCOUNT_PATH, 
@@ -100,5 +102,10 @@ public class AccountGatewayController {
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.ENCRYPT_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();		
 	}
+//	private String checkTrainer(String fName, String lName) {
+//		HttpEntity<String> entity = new HttpEntity<>(fName+lName);
+//		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.TRAINER, false).getHomePageUrl()+Constants.ENCRYPT_PATH, 
+//				HttpMethod.PUT, entity, String.class).getBody();
+//	}
 
 }
