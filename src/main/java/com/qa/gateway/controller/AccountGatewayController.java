@@ -20,6 +20,7 @@ import com.qa.gateway.entities.Constants;
 import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.entities.Login;
 import com.qa.gateway.entities.Trainer;
+import com.qa.gateway.entities.UpdateAccount;
 import com.qa.gateway.service.AccountGatewayServiceImpl;
 @RestController
 public class AccountGatewayController {
@@ -42,7 +43,7 @@ public class AccountGatewayController {
 				saveAccount(srvc.createAccount(account));
 				saveTrainer(srvc.createTrainer(account));
 				return "New trainer and account created";
-			}
+			}else return trainerResponse;
 		}else return checkResponse;
 	}
 	@GetMapping("/getAccount/{accountId}")
@@ -59,12 +60,15 @@ public class AccountGatewayController {
 	}
 	
 	@PutMapping("/updateAccount")
-	public String updateAccount(@RequestBody Account account) {
+	public String updateAccount(@RequestBody UpdateAccount account) {
 		Account oldAccount = getAccount(account.getId());
-		Account updAccount = srvc.updateAccount(account, oldAccount);
-		if(oldAccount!=updAccount) {
-			return saveAccount(account);
-		}else return Constants.NOTHING_CHANGED_MESSAGE;		
+		String checkUpdate = checkUpdateValid(account);
+		if(checkUpdate.equals("Valid")) {
+			Account updAccount = srvc.updateAccount(account, oldAccount);
+			if(oldAccount!=updAccount) {
+				return saveAccount(account);
+			}else return null;
+		}else return checkUpdate;		
 	}
 	
 	@DeleteMapping("/deleteAccount/{accountId}")
@@ -75,7 +79,6 @@ public class AccountGatewayController {
 	}
 	@PutMapping("/login")
 	public Account login(@RequestBody Login login) {
-//		login.setPassword(encrypt(login.getPassword()));
 		HttpEntity<Login> entity = new HttpEntity<>(login);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.LOGIN_PATH, 
 				HttpMethod.PUT, entity, Account.class).getBody();
@@ -95,6 +98,11 @@ public class AccountGatewayController {
 	private String checkValid(CreateAccount account) {
 		HttpEntity<CreateAccount> entity = new HttpEntity<>(account);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.CHECK_VALID_PATH, 
+				HttpMethod.PUT, entity, String.class).getBody();
+	}
+	private String checkUpdateValid(UpdateAccount account) {
+		HttpEntity<Account> entity = new HttpEntity<>(account);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.CHECK_UPDATE_VALID_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();
 	}
 	private String checkTrainer(CreateAccount account) {

@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.CreateAccount;
+import com.qa.gateway.entities.Trainer;
 
 public interface AccountGatewayService {
 	
 	public Account createAccount(CreateAccount account);
 	
-	public Account createTrainer(CreateAccount account);
+	public Trainer createTrainer(CreateAccount account);
 	
 	public Account getAccount(Long id);
 	

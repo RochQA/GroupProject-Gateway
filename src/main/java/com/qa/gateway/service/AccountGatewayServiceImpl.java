@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.qa.gateway.entities.Account;
-import com.qa.gateway.entities.Constants;
 import com.qa.gateway.entities.CreateAccount;
+import com.qa.gateway.entities.Trainer;
 import com.qa.gateway.repository.AccountRepository;
 
 @Service
@@ -48,5 +48,14 @@ public class AccountGatewayServiceImpl implements AccountGatewayService{
 	public String deleteAccount(Long id) {
 		repo.deleteById(id);
 		return null;
+	}
+
+	@Override
+	public Trainer createTrainer(CreateAccount account) {
+		Trainer trainer = new Trainer();
+		trainer.setEmail(account.getEmail());
+		trainer.setFirstName(account.getTrainerFirstName());
+		trainer.setLastName(account.getTrainerLastName());
+		return trainer;
 	}
 }

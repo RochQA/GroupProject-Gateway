@@ -18,8 +18,6 @@ public class Account {
 	
 	private String accountType;
 	
-
-
 	public Long getId() {
 		return id;
 	}
