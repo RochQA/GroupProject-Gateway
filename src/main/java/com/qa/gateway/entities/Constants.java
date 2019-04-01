@@ -23,6 +23,9 @@ public class Constants {
 	public static final String CREATE_TRAINER_PATH = "createTrainer";
 	public static final String PLAN = "PLAN";
 	public static final String CHECK_UPDATE_VALID_PATH = "checkUpdateValid";
+	public static final String DELETE_TRAINER_PATH = "deleteTrainer";
+	public static final String GET_ALL_TRAINERS_PATH = "getAllTrainers";
+	public static final String GET_TRAINER_PATH = "getTrainer";
 
 
 }
