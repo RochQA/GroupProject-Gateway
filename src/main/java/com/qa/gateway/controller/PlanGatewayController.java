@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netflix.discovery.EurekaClient;
 import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.Constants;
+import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.entities.Plan;
 import com.qa.gateway.service.PlanGatewayServiceImpl;
 @RestController
@@ -66,8 +67,9 @@ public class PlanGatewayController {
 				HttpMethod.DELETE, entity, String.class).getBody();
 	}
 	private String checkPlan(Plan plan) {
-		// TODO Auto-generated method stub
-		return null;
+		HttpEntity<Plan> entity = new HttpEntity<>(plan);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.PLAN, false).getHomePageUrl()+Constants.CHECK_VALID_PATH, 
+				HttpMethod.PUT, entity, String.class).getBody();
 	}	
 	private String savePlan(Plan plan) {
 		HttpEntity<Plan> entity = new HttpEntity<>(plan);

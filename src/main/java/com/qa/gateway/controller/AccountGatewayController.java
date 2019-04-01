@@ -19,7 +19,7 @@ import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.Constants;
 import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.entities.Login;
-import com.qa.gateway.entities.UpdateAccount;
+import com.qa.gateway.entities.Trainer;
 import com.qa.gateway.service.AccountGatewayServiceImpl;
 @RestController
 public class AccountGatewayController {
@@ -75,7 +75,7 @@ public class AccountGatewayController {
 	}
 	@PutMapping("/login")
 	public Account login(@RequestBody Login login) {
-		login.setPassword(encrypt(login.getPassword()));
+//		login.setPassword(encrypt(login.getPassword()));
 		HttpEntity<Login> entity = new HttpEntity<>(login);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.LOGIN_PATH, 
 				HttpMethod.PUT, entity, Account.class).getBody();
@@ -87,7 +87,7 @@ public class AccountGatewayController {
 		return Constants.VALID_MESSAGE;
 	}	
 	private String saveTrainer(Trainer trainer) {
-		HttpEntity<Account> entity = new HttpEntity<>(trainer);
+		HttpEntity<Trainer> entity = new HttpEntity<>(trainer);
 		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_TRAINER_PATH, 
 				HttpMethod.POST, entity, String.class).getBody();
 		return Constants.VALID_MESSAGE;

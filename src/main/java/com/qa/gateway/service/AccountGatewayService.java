@@ -9,6 +9,8 @@ public interface AccountGatewayService {
 	
 	public Account createAccount(CreateAccount account);
 	
+	public Account createTrainer(CreateAccount account);
+	
 	public Account getAccount(Long id);
 	
 	public List<Account> getAllAccounts();

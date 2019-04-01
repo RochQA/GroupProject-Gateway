@@ -17,8 +17,26 @@ public class CreateAccount {
 	
 	private String confirmPassword;
 	
-	private String trainerName;
+	private String trainerFirstName;
 	
+	private String trainerLastName;
+	
+	public String getTrainerFirstName() {
+		return trainerFirstName;
+	}
+
+	public void setTrainerFirstName(String trainerFirstName) {
+		this.trainerFirstName = trainerFirstName;
+	}
+
+	public String getTrainerLastName() {
+		return trainerLastName;
+	}
+
+	public void setTrainerLastName(String trainerLastName) {
+		this.trainerLastName = trainerLastName;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -51,13 +69,7 @@ public class CreateAccount {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public String getTrainerName() {
-		return trainerName;
-	}
 
-	public void setTrainerName(String trainerName) {
-		this.trainerName = trainerName;
-	}	
 	
 	
 }
