@@ -3,10 +3,12 @@ package com.qa.gateway.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Plan {
 	
+	@Id
 	private Long Id;
 	
 	private String topic;

@@ -40,8 +40,9 @@ public class AccountGatewayController {
 		if(checkResponse.equals(Constants.VALID_MESSAGE)) {
 			String trainerResponse = checkTrainer(account);
 			if(trainerResponse.equals("Valid")) {
-				saveAccount(srvc.createAccount(account));
-				saveTrainer(srvc.createTrainer(account));
+				Long trainerId = saveTrainer(srvc.createTrainer(account));
+				account.setTrainerId(trainerId);
+				saveAccount(srvc.createAccount(account));				
 				return "New trainer and account created";
 			}else return trainerResponse;
 		}else return checkResponse;
@@ -89,11 +90,11 @@ public class AccountGatewayController {
 				HttpMethod.POST, entity, String.class).getBody();
 		return Constants.VALID_MESSAGE;
 	}	
-	private String saveTrainer(Trainer trainer) {
+	private Long saveTrainer(Trainer trainer) {
 		HttpEntity<Trainer> entity = new HttpEntity<>(trainer);
-		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_TRAINER_PATH, 
-				HttpMethod.POST, entity, String.class).getBody();
-		return Constants.VALID_MESSAGE;
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_TRAINER_PATH, 
+				HttpMethod.POST, entity, Long.class).getBody();
+		
 	}	
 	private String checkValid(CreateAccount account) {
 		HttpEntity<CreateAccount> entity = new HttpEntity<>(account);

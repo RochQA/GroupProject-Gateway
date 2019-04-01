@@ -7,7 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 	
-	@Id
+	@Id 
 	private Long id;
 
 	private String email;
