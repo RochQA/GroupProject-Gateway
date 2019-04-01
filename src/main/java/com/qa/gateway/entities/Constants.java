@@ -14,6 +14,7 @@ public class Constants {
 	public static final String GET_ALL_ACCOUNT_PATH = "getterAllAccounts";
 	public static final String NOTHING_CHANGED_MESSAGE = "Nothing was changed";
 	public static final String DELETE_ACCOUNT_PATH = "deleteAccount";
+
 	public static final String DELETE_PLAN_PATH = "deletePlan";
 	public static final String CREATE_PLAN_PATH = "createPlan";
 	public static final String GET_PLAN_PATH = "getPlan";
@@ -22,5 +23,6 @@ public class Constants {
 	public static final String CREATE_TRAINER_PATH = "createTrainer";
 	public static final String PLAN = "PLAN";
 	public static final String CHECK_UPDATE_VALID_PATH = "checkUpdateValid";
+
 
 }

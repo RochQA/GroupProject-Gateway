@@ -10,6 +10,7 @@ public class CreateAccount extends Account {
 	private String confirmPassword;
 	
 	private String trainerFirstName;
+
 	
 	private String trainerLastName;
 	
@@ -36,7 +37,6 @@ public class CreateAccount extends Account {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-
 
 	
 	
