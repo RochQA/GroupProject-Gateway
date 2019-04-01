@@ -18,54 +18,52 @@ import com.netflix.discovery.EurekaClient;
 import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.Constants;
 import com.qa.gateway.entities.CreateAccount;
-import com.qa.gateway.entities.Plan;
-import com.qa.gateway.service.PlanGatewayServiceImpl;
+import com.qa.gateway.entities.Trainer;
 @RestController
 public class TrainerGatewayController {
 	
-	private PlanGatewayServiceImpl srvc;
+//	private TrainerGatewayServiceImpl srvc;
 	private RestTemplateBuilder rest;
 	private EurekaClient client;
 
-	public TrainerGatewayController(PlanGatewayServiceImpl srvc, RestTemplateBuilder rest, EurekaClient client) {
-		this.srvc = srvc;
+	public TrainerGatewayController(RestTemplateBuilder rest, EurekaClient client) {
+		
 		this.rest = rest;
 		this.client = client;
 	}
 	
-	@GetMapping("/getPlan/{planId}")
-	public Plan getPlan(@PathVariable Long planId) {
-		HttpEntity<Long> entity = new HttpEntity<>(planId);
+	@GetMapping("/getTrainer/{trainerId}")
+	public Trainer getTrainer(@PathVariable Long trainerId) {
+		HttpEntity<Long> entity = new HttpEntity<>(trainerId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_TRAINER_PATH, 
-				HttpMethod.GET, entity, Plan.class).getBody();
+				HttpMethod.GET, entity, Trainer.class).getBody();
 	}
 	
-	@GetMapping("/getAllPlans")
-	public List<Plan> getAllPlans(){
+	@GetMapping("/getAllTrainers")
+	public List<Trainer> getAllTrainers(){
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_TRAINERS_PATH, 
-				HttpMethod.GET, null, new ParameterizedTypeReference<List<Plan>>(){}).getBody();
-	
+				HttpMethod.GET, null, new ParameterizedTypeReference<List<Trainer>>(){}).getBody();	
 	}
 	
-	@PutMapping("/updatePlan")
-	public String updatePlan(@RequestBody Plan plan) {
+	@PutMapping("/updateTrainer")
+	public String updateTrainer(@RequestBody Trainer trainer) {
 		
 		return null;	
 	}
 	
-	@DeleteMapping("/deletePlan/{planId}")
-	public String deletePlan(@PathVariable Long planId) {
-		HttpEntity<Long> entity = new HttpEntity<>(planId);
+	@DeleteMapping("/deleteTrainer/{trainerId}")
+	public String deleteTrainer(@PathVariable Long trainerId) {
+		HttpEntity<Long> entity = new HttpEntity<>(trainerId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_TRAINER_PATH, 
 				HttpMethod.DELETE, entity, String.class).getBody();
 	}
-	private String checkPlan(Plan plan) {
-		HttpEntity<Plan> entity = new HttpEntity<>(plan);
+	private String checkTrainer(Trainer trainer) {
+		HttpEntity<Trainer> entity = new HttpEntity<>(trainer);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.PLAN, false).getHomePageUrl()+Constants.CHECK_VALID_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();
 	}	
-	private String savePlan(Plan plan) {
-		HttpEntity<Plan> entity = new HttpEntity<>(plan);
+	private String saveTrainer(Trainer trainer) {
+		HttpEntity<Trainer> entity = new HttpEntity<>(trainer);
 		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_TRAINER_PATH, 
 				HttpMethod.POST, entity, String.class).getBody();
 		return Constants.VALID_MESSAGE;

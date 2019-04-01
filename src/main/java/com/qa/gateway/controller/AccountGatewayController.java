@@ -41,6 +41,7 @@ public class AccountGatewayController {
 			String trainerResponse = checkTrainer(account);
 			if(trainerResponse.equals("Valid")) {
 				Long trainerId = saveTrainer(srvc.createTrainer(account));
+				account.setPassword(encrypt(account.getPassword()));
 				account.setTrainerId(trainerId);
 				saveAccount(srvc.createAccount(account));				
 				return "New trainer and account created";
@@ -48,12 +49,11 @@ public class AccountGatewayController {
 		}else return checkResponse;
 
 	}
-	@GetMapping("/getAccount/{accountId}")
-	
+	@GetMapping("/getAccount/{accountId}")	
 	public Account getAccount(@PathVariable Long accountId) {
 		HttpEntity<Long> entity = new HttpEntity<>(accountId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ACCOUNT_PATH, 
-				HttpMethod.GET, entity, Account.class).getBody();
+				HttpMethod.PUT, entity, Account.class).getBody();
 	}
 	
 	@GetMapping("/getAllAccounts")
@@ -68,9 +68,10 @@ public class AccountGatewayController {
 		String checkUpdate = checkUpdateValid(account);
 		if(checkUpdate.equals("Valid")) {
 			Account updAccount = srvc.updateAccount(account, oldAccount);
-			if(oldAccount!=updAccount) {
-				return saveAccount(account);
-			}else return null;
+//			if(oldAccount!=updAccount) {
+			updAccount.setPassword(encrypt(updAccount.getPassword()));
+				return saveAccount(updAccount);
+//			}else return "nothing changed";
 		}else return checkUpdate;		
 	}
 	
@@ -104,7 +105,7 @@ public class AccountGatewayController {
 				HttpMethod.PUT, entity, String.class).getBody();
 	}
 	private String checkUpdateValid(UpdateAccount account) {
-		HttpEntity<Account> entity = new HttpEntity<>(account);
+		HttpEntity<UpdateAccount> entity = new HttpEntity<>(account);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.CHECK_UPDATE_VALID_PATH, 
 				HttpMethod.PUT, entity, String.class).getBody();
 	}

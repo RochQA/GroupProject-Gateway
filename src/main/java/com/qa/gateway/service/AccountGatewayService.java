@@ -5,6 +5,7 @@ import java.util.List;
 import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.entities.Trainer;
+import com.qa.gateway.entities.UpdateAccount;
 
 public interface AccountGatewayService {
 	
@@ -16,7 +17,7 @@ public interface AccountGatewayService {
 	
 	public List<Account> getAllAccounts();
 	
-	public Account updateAccount(Account upAccount, Account account);
+	public Account updateAccount(UpdateAccount upAccount, Account account);
 	
 	public String deleteAccount(Long id);
 	

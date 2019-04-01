@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.CreateAccount;
 import com.qa.gateway.entities.Trainer;
+import com.qa.gateway.entities.UpdateAccount;
 import com.qa.gateway.repository.AccountRepository;
 
 @Service
@@ -37,7 +38,7 @@ public class AccountGatewayServiceImpl implements AccountGatewayService{
 		return repo.findAll();
 	}
 	@Override
-	public Account updateAccount(Account upAccount, Account account) {
+	public Account updateAccount(UpdateAccount upAccount, Account account) {
 		if(upAccount != null) {
 			account.setEmail(upAccount.getEmail());
 			account.setPassword(upAccount.getPassword());
