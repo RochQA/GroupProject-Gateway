@@ -7,7 +7,7 @@ public class Constants {
 	public static final String CHECK_VALID_PATH = "checkValid";
 	public static final String CHECK_DUPLICATES_PATH = "checkDuplicates";
 	public static final String ENCRYPT_PATH = "encrypt";
-	public static final String CREATED_ACCOUNT_MESSAGE = "Created Account!";
+	public static final String CREATED_ACCOUNT_MESSAGE = "Created account and trainer!";
 	public static final String GETTER = "GETTER";
 	public static final String CREATE_ACCOUNT_PATH = "createAccount";
 	public static final String GET_ACCOUNT_PATH = "getAccount";
@@ -28,6 +28,7 @@ public class Constants {
 	public static final String GET_TRAINER_PATH = "getTrainer";
 	public static final String CHECK_UPDATE_TRAINER_PATH = "checkUpdateTrainer";
 	public static final String CHECK_PLAN_PATH = "checkPlan";
+	public static final String CHECK_UPDATE_PLAN_PATH = "checkUpdatePlan";
 
 
 }

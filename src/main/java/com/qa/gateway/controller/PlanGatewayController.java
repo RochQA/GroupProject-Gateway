@@ -1,9 +1,7 @@
 package com.qa.gateway.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -17,35 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.discovery.EurekaClient;
-import com.qa.gateway.entities.Account;
 import com.qa.gateway.entities.Constants;
-import com.qa.gateway.entities.CreateAccount;
+
 import com.qa.gateway.entities.Plan;
-import com.qa.gateway.repository.AccountRepository;
-import com.qa.gateway.service.PlanGatewayServiceImpl;
+
 @RestController
 public class PlanGatewayController {
 	
-	private PlanGatewayServiceImpl srvc;
+
 	private RestTemplateBuilder rest;
 	private EurekaClient client;
-	@Autowired
-	AccountRepository repo;
 
-	public PlanGatewayController(PlanGatewayServiceImpl srvc, RestTemplateBuilder rest, EurekaClient client) {
-		this.srvc = srvc;
+	public PlanGatewayController(RestTemplateBuilder rest, EurekaClient client) {
 		this.rest = rest;
 		this.client = client;
 	}
-	@PostMapping("/createAPlan")
-	public String createAPlan(@RequestBody Plan plan) {
-		repo.save(plan);
-		return "Saved";
-	}
+
 	@PostMapping("/createPlan")
 	public String createPlan(@RequestBody Plan plan) {
 		String checkRes = (checkPlan(plan));
-		if (checkRes.equals("Valid")) {
+		if (checkRes.equals(Constants.VALID_MESSAGE)) {
 			return savePlan(plan);
 		}else return checkRes;
 	}
@@ -65,8 +54,10 @@ public class PlanGatewayController {
 	
 	@PutMapping("/updatePlan")
 	public String updatePlan(@RequestBody Plan plan) {
-		
-		return null;	
+		String checkRes = (checkUpdatePlan(plan));
+		if (checkRes.equals(Constants.VALID_MESSAGE)) {
+			return savePlan(plan);
+		}else return checkRes;	
 	}
 	
 	@DeleteMapping("/deletePlan/{planId}")
@@ -74,6 +65,11 @@ public class PlanGatewayController {
 		HttpEntity<Long> entity = new HttpEntity<>(planId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_PLAN_PATH, 
 				HttpMethod.DELETE, entity, String.class).getBody();
+	}
+	private String checkUpdatePlan(Plan plan) {
+		HttpEntity<Plan> entity = new HttpEntity<>(plan);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.PLAN, false).getHomePageUrl()+Constants.CHECK_UPDATE_PLAN_PATH, 
+				HttpMethod.POST, entity, String.class).getBody();
 	}
 	private String checkPlan(Plan plan) {
 		HttpEntity<Plan> entity = new HttpEntity<>(plan);
