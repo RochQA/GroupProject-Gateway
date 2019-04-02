@@ -35,7 +35,7 @@ public class AccountGatewayServiceImpl implements AccountGatewayService{
 	}
 	@Override
 	public List<Account> getAllAccounts() {
-		return repo.findAll();
+		return null;
 	}
 	@Override
 	public Account updateAccount(UpdateAccount upAccount, Account account) {

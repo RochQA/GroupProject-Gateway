@@ -7,7 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 	
-	@Id 
+	@Id
 	private Long id;
 
 	private String email;
@@ -16,7 +16,10 @@ public class Account {
 	
 	private Long trainerId;
 	
-	private String accountType;
+	private enum accountType{
+		ADMIN,
+		TRAINER
+	};
 	
 	public Long getId() {
 		return id;
@@ -50,13 +53,7 @@ public class Account {
 		this.trainerId = trainerId;
 	}
 
-	public String getAccountType() {
-		return accountType;
-	}
 
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
 	
 	
 	

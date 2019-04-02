@@ -46,26 +46,21 @@ public class PlanGatewayController {
 	public String createPlan(@RequestBody Plan plan) {
 		String checkRes = (checkPlan(plan));
 		if (checkRes.equals("Valid")) {
-//			return savePlan(plan);
-			repo.save(plan);
-			return "created";
+			return savePlan(plan);
 		}else return checkRes;
 	}
 	
 	@GetMapping("/getPlan/{planId}")
-	public Optional<Plan> getPlan(@PathVariable Long planId) {
+	public Plan getPlan(@PathVariable Long planId) {
 		HttpEntity<Long> entity = new HttpEntity<>(planId);
-//		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_PLAN_PATH, 
-//				HttpMethod.GET, entity, Plan.class).getBody();
-		return repo.findById(planId);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_PLAN_PATH, 
+				HttpMethod.GET, entity, Plan.class).getBody();
 	}
 	
 	@GetMapping("/getAllPlans")
 	public List<Plan> getAllPlans(){
-//		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_PLAN_PATH, 
-//				HttpMethod.GET, null, new ParameterizedTypeReference<List<Plan>>(){}).getBody();
-		return repo.findAll();
-	
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_PLAN_PATH, 
+				HttpMethod.GET, null, new ParameterizedTypeReference<List<Plan>>(){}).getBody();	
 	}
 	
 	@PutMapping("/updatePlan")
@@ -76,11 +71,9 @@ public class PlanGatewayController {
 	
 	@DeleteMapping("/deletePlan/{planId}")
 	public String deletePlan(@PathVariable Long planId) {
-//		HttpEntity<Long> entity = new HttpEntity<>(planId);
-//		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_PLAN_PATH, 
-//				HttpMethod.DELETE, entity, String.class).getBody();
-		repo.deleteById(planId);
-		return "deleted";
+		HttpEntity<Long> entity = new HttpEntity<>(planId);
+		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_PLAN_PATH, 
+				HttpMethod.DELETE, entity, String.class).getBody();
 	}
 	private String checkPlan(Plan plan) {
 		HttpEntity<Plan> entity = new HttpEntity<>(plan);
@@ -88,9 +81,9 @@ public class PlanGatewayController {
 				HttpMethod.POST, entity, String.class).getBody();
 	}	
 	private String savePlan(Plan plan) {
-//		HttpEntity<Plan> entity = new HttpEntity<>(plan);
-//		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_PLAN_PATH, 
-//				HttpMethod.POST, entity, String.class).getBody();
+		HttpEntity<Plan> entity = new HttpEntity<>(plan);
+		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_PLAN_PATH, 
+				HttpMethod.POST, entity, String.class).getBody();
 		return Constants.VALID_MESSAGE;
 	}	
 
