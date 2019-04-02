@@ -21,7 +21,7 @@ public class Plan {
 	
 	private Date endDate;
 	
-	private int roomNumber;
+	private String room;
 
 	public Long getId() {
 		return Id;
@@ -71,12 +71,12 @@ public class Plan {
 		this.endDate = endDate;
 	}
 
-	public int getRoomNumber() {
-		return roomNumber;
+	public String getRoomNumber() {
+		return room;
 	}
 
-	public void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
+	public void setRoomNumber(String room) {
+		this.room = room;
 	}
 	
 	
