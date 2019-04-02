@@ -45,7 +45,7 @@ public class AccountGatewayController {
 				Long trainerId = saveTrainer(srvc.createTrainer(account));
 				account.setPassword(encrypt(account.getPassword()));
 				account.setTrainerId(trainerId);
-				saveAccount(srvc.createAccount(account));				
+				saveAccount(account);				
 				return "New trainer and account created";
 			}else return trainerResponse;
 		}else return checkResponse;
