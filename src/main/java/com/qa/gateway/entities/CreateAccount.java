@@ -1,48 +1,31 @@
 package com.qa.gateway.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
-public class CreateAccount {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	private String email;
-	
-	private String password;
-	
+public class CreateAccount extends Account {
+		
 	private String confirmPassword;
 	
 	private String trainerFirstName;
+
 	
 	private String trainerLastName;
 	
-	public Long getId() {
-		return id;
+	public String getTrainerFirstName() {
+		return trainerFirstName;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setTrainerFirstName(String trainerFirstName) {
+		this.trainerFirstName = trainerFirstName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getTrainerLastName() {
+		return trainerLastName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setTrainerLastName(String trainerLastName) {
+		this.trainerLastName = trainerLastName;
 	}
 
 	public String getConfirmPassword() {
@@ -53,21 +36,6 @@ public class CreateAccount {
 		this.confirmPassword = confirmPassword;
 	}
 
-	public String getTrainerFirstName() {
-		return trainerFirstName;
-	}
-
-	public void setTrainerFirstName(String trainerName) {
-		this.trainerFirstName = trainerName;
-	}
-
-	public String getTrainerLastName() {
-		return trainerLastName;
-	}
-
-	public void setTrainerLastName(String trainerLastName) {
-		this.trainerLastName = trainerLastName;
-	}	
 	
 	
 }
