@@ -26,20 +26,20 @@ public class TrainerGatewayController {
 		this.client = client;
 	}
 	
-	@GetMapping("/getTrainer/{trainerId}")
+	@GetMapping(Constants.GET_TRAINER)
 	public Trainer getTrainer(@PathVariable Long trainerId) {
 		HttpEntity<Long> entity = new HttpEntity<>(trainerId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_TRAINER_PATH, 
 				HttpMethod.GET, entity, Trainer.class).getBody();
 	}
 	
-	@GetMapping("/getAllTrainers")
+	@GetMapping(Constants.GET_ALL_TRAINERS)
 	public List<Trainer> getAllTrainers(){
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_TRAINERS_PATH, 
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<Trainer>>(){}).getBody();	
 	}
 	
-	@DeleteMapping("/deleteTrainer/{trainerId}")
+	@DeleteMapping(Constants.DELETE_TRAINER)
 	public String deleteTrainer(@PathVariable Long trainerId) {
 		HttpEntity<Long> entity = new HttpEntity<>(trainerId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_TRAINER_PATH, 

@@ -35,7 +35,7 @@ public class AccountGatewayController {
 		this.rest = rest;
 		this.client = client;
 	}
-	@PostMapping("/createAccount")
+	@PostMapping(Constants.CREATE_ACCOUNT)
 	public String createAccount(@RequestBody CreateAccount account) {
 		String checkResponse = checkAccount(account);
 		if(checkResponse.equals(Constants.VALID_MESSAGE)) {
@@ -50,20 +50,20 @@ public class AccountGatewayController {
 		}else return checkResponse;
 
 	}
-	@GetMapping("/getAccount/{accountId}")	
+	@GetMapping(Constants.GET_ACCOUNT)	
 	public Account getAccount(@PathVariable Long accountId) {
 		HttpEntity<Long> entity = new HttpEntity<>(accountId);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ACCOUNT_PATH, 
 				HttpMethod.PUT, entity, Account.class).getBody();
 	}
 	
-	@GetMapping("/getAllAccounts")
+	@GetMapping(Constants.GET_ALL_ACCOUNTS)
 	public List<Account> getAllAccounts(){
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.GET_ALL_ACCOUNT_PATH, 
 				HttpMethod.GET, null, new ParameterizedTypeReference<List<Account>>(){}).getBody();
 	}
 	
-	@PutMapping("/updateAccount")
+	@PutMapping(Constants.UPDATE_ACCOUNT)
 	public String updateAccount(@RequestBody UpdateAccount account) {
 		String checkUpdate = checkUpdateAccount(account);
 		if(checkUpdate.equals("Valid")) {
@@ -76,7 +76,7 @@ public class AccountGatewayController {
 		}else return checkUpdate;		
 	}
 	
-	@DeleteMapping("/deleteAccount/{accountId}")
+	@DeleteMapping(Constants.DELETE_ACCOUNT)
 	public String deleteAccount(@PathVariable Long accountId) {
 		HttpEntity<Long> entityT = new HttpEntity<>(getAccount(accountId).getTrainerId());
 		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_TRAINER_PATH, 
@@ -85,7 +85,7 @@ public class AccountGatewayController {
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_ACCOUNT_PATH, 
 				HttpMethod.DELETE, entityA, String.class).getBody();
 	}
-	@PutMapping("/login")
+	@PutMapping(Constants.LOGIN)
 	public Account login(@RequestBody Login login) {
 		HttpEntity<Login> entity = new HttpEntity<>(login);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.ACCOUNT, false).getHomePageUrl()+Constants.LOGIN_PATH, 

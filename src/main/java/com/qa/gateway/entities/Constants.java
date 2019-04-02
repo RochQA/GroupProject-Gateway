@@ -29,6 +29,20 @@ public class Constants {
 	public static final String CHECK_UPDATE_TRAINER_PATH = "checkUpdateTrainer";
 	public static final String CHECK_PLAN_PATH = "checkPlan";
 	public static final String CHECK_UPDATE_PLAN_PATH = "checkUpdatePlan";
+	public static final String CREATE_ACCOUNT = "/createAccount";
+	public static final String GET_ACCOUNT = "/getAccount/{accountId}";
+	public static final String GET_ALL_ACCOUNTS = "/getAllAccounts";
+	public static final String UPDATE_ACCOUNT = "/updateAccount";
+	public static final String DELETE_ACCOUNT = "/deleteAccount/{accountId}";
+	public static final String LOGIN = "/login";
+	public static final String CREATE_PLAN = "/createPlan";
+	public static final String GET_PLAN = "/getPlan/{planId}";
+	public static final String GET_ALL_PLANS = "/getAllPlans";
+	public static final String UPDATE_PLAN = "/updatePlan";
+	public static final String DELETE_PLAN = "/deletePlan/{planId}";
+	public static final String GET_TRAINER = "/getTrainer/{trainerId}";
+	public static final String GET_ALL_TRAINERS = "/getAllTrainers";
+	public static final String DELETE_TRAINER = "/deleteTrainer/{trainerId}";
 
 
 }
