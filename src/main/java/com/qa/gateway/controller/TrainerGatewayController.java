@@ -45,5 +45,4 @@ public class TrainerGatewayController {
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_TRAINER_PATH, 
 				HttpMethod.DELETE, entity, String.class).getBody();
 	}
-
 }
