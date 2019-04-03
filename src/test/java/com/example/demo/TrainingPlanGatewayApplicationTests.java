@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.qa.gateway.GatewayApplication;
-import com.qa.trainer.TrainerApplication;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GatewayApplication.class)
