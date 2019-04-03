@@ -6,6 +6,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.qa.gateway.entities.Login;
 import com.qa.gateway.entities.Trainer;
 import com.qa.gateway.entities.UpdateAccount;
 import com.qa.gateway.service.AccountGatewayServiceImpl;
-
+@CrossOrigin(origins="35.210.85.248")
 @RestController
 public class AccountGatewayController {
 	
