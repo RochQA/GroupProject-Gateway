@@ -6,5 +6,5 @@ COPY . .
 RUN mvn clean package
 
 FROM openjdk:8
-COPY --from=build /build/target/Gateway-0.0.1-SNAPSHOT.jar Gateway.jar
+COPY --from=build /build/target/TrainingPlanGateway-0.0.1-SNAPSHOT.jar Gateway.jar
 ENTRYPOINT ["java","-jar","Gateway.jar"]
