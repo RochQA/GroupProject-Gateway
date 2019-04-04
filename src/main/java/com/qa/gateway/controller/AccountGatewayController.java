@@ -23,7 +23,7 @@ import com.qa.gateway.entities.Login;
 import com.qa.gateway.entities.Trainer;
 import com.qa.gateway.entities.UpdateAccount;
 import com.qa.gateway.service.AccountGatewayServiceImpl;
-@CrossOrigin(origins="35.210.85.248:3000")
+@CrossOrigin(origins="http://35.210.85.248:3000")
 @RestController
 public class AccountGatewayController {
 	

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netflix.discovery.EurekaClient;
 import com.qa.gateway.entities.Constants;
 import com.qa.gateway.entities.Trainer;
-@CrossOrigin(origins="35.210.85.248:3000")
+@CrossOrigin(origins="http://35.210.85.248:3000")
 @RestController
 public class TrainerGatewayController {
 	
