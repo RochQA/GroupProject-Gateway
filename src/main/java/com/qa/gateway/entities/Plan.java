@@ -11,17 +11,17 @@ public class Plan {
 	@Id
 	private Long Id;
 	
-	private String topic;
-	
-	private String trainerName; 
-	
-	private String traineeGroup;
-	
 	private Date startDate;
 	
 	private Date endDate;
+		
+	private Topic topic;
+		
+	private TraineeGroup traineeGroup;
 	
-	private String room;
+	private Trainer trainer;
+	
+	private Room room;
 
 	public Long getId() {
 		return Id;
@@ -29,30 +29,6 @@ public class Plan {
 
 	public void setId(Long id) {
 		Id = id;
-	}
-
-	public String getTopic() {
-		return topic;
-	}
-
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
-
-	public String getTrainerName() {
-		return trainerName;
-	}
-
-	public void setTrainerName(String trainerName) {
-		this.trainerName = trainerName;
-	}
-
-	public String getTraineeGroup() {
-		return traineeGroup;
-	}
-
-	public void setTraineeGroup(String traineeGroup) {
-		this.traineeGroup = traineeGroup;
 	}
 
 	public Date getStartDate() {
@@ -71,16 +47,36 @@ public class Plan {
 		this.endDate = endDate;
 	}
 
-	public String getRoomNumber() {
+	public Topic getTopic() {
+		return topic;
+	}
+
+	public void setTopic(Topic topic) {
+		this.topic = topic;
+	}
+
+	public TraineeGroup getTraineeGroup() {
+		return traineeGroup;
+	}
+
+	public void setTraineeGroup(TraineeGroup traineeGroup) {
+		this.traineeGroup = traineeGroup;
+	}
+
+	public Trainer getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
+	}
+
+	public Room getRoom() {
 		return room;
 	}
 
-	public void setRoomNumber(String room) {
+	public void setRoom(Room room) {
 		this.room = room;
-	}
-	
-	
-	
-	
+	}	
 
 }

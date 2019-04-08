@@ -42,9 +42,8 @@ public class AccountGatewayController {
 		if(checkResponse.equals(Constants.VALID_MESSAGE)) {
 			String trainerResponse = checkTrainer(account);
 			if(trainerResponse.equals(Constants.VALID_MESSAGE)) {
-				Long trainerId = saveTrainer(srvc.createTrainer(account));
 				account.setPassword(encrypt(account.getPassword()));
-				account.setTrainerId(trainerId);  
+				account.setTrainer(saveTrainer(srvc.createTrainer(account)));  
 				saveAccount(account);				
 				return Constants.CREATED_ACCOUNT_MESSAGE;
 			}else return trainerResponse;
@@ -79,7 +78,7 @@ public class AccountGatewayController {
 	
 	@DeleteMapping(Constants.DELETE_ACCOUNT)
 	public String deleteAccount(@PathVariable Long accountId) {
-		HttpEntity<Long> entityT = new HttpEntity<>(getAccount(accountId).getTrainerId());
+		HttpEntity<Long> entityT = new HttpEntity<>(getAccount(accountId).getTrainer().getId());
 		this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.DELETE_TRAINER_PATH, 
 				HttpMethod.DELETE, entityT, String.class).getBody();
 		HttpEntity<Long> entityA = new HttpEntity<>(accountId);
@@ -98,10 +97,10 @@ public class AccountGatewayController {
 				HttpMethod.POST, entity, String.class).getBody();
 		return Constants.VALID_MESSAGE;
 	}	
-	private Long saveTrainer(Trainer trainer) {
+	private Trainer saveTrainer(Trainer trainer) {
 		HttpEntity<Trainer> entity = new HttpEntity<>(trainer);
 		return this.rest.build().exchange(client.getNextServerFromEureka(Constants.GETTER, false).getHomePageUrl()+Constants.CREATE_TRAINER_PATH, 
-				HttpMethod.POST, entity, Long.class).getBody();
+				HttpMethod.POST, entity, Trainer.class).getBody();
 		
 	}	
 	private String checkAccount(CreateAccount account) {

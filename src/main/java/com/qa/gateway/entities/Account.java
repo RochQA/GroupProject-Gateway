@@ -13,7 +13,7 @@ public class Account {
 	
 	private String password;
 	
-	private Long trainerId;
+	private Trainer trainer;
 	
 	private Boolean admin;
 	
@@ -50,12 +50,12 @@ public class Account {
 		this.password = password;
 	}
 
-	public Long getTrainerId() {
-		return trainerId;
+	public Trainer getTrainer() {
+		return trainer;
 	}
 
-	public void setTrainerId(Long trainerId) {
-		this.trainerId = trainerId;
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
 	}
 
 
